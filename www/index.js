@@ -1,4 +1,5 @@
-import { Universe } from "game-of-life";
+import { Universe, Cell } from "game-of-life";
+
 
 const pre = document.getElementById("game-of-life-canvas");
 const universe = Universe.new();
