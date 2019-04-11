@@ -142,7 +142,7 @@ impl Universe {
 
     pub fn new() -> Universe {
         utils::set_panic_hook();
-        
+
         let width = 128;
         let height = 128;
 
@@ -163,6 +163,30 @@ impl Universe {
         }
     }
 
+    pub fn width(&self) -> u32 {
+        self.width
+    }
+
+    /// Set the width of the universe.
+    ///
+    /// Resets all cells to the dead state.
+    pub fn set_width(&mut self, width: u32) {
+        self.width = width;
+        self.cells = (0..width * self.height).map(|_i| Cell::Dead).collect();
+    }
+
+    pub fn height(&self) -> u32 {
+        self.height
+    }
+
+    /// Set the height of the universe.
+    ///
+    /// Resets all cells to the dead state.
+    pub fn set_height(&mut self, height: u32) {
+        self.height = height;
+        self.cells = (0..self.width * height).map(|_i| Cell::Dead).collect();
+    }
+    
     pub fn render(&self) -> String {
         self.to_string()
     }
