@@ -111,31 +111,22 @@ playPauseButton.addEventListener("click", event => {
 
 // Draw equal-distant overlapping vertical and horizontal lines to create the grid overlay
 const drawGrid = () => {
-    ctx.beginPath();
-    ctx.strokeStyle = GRID_COLOR;
-  
-    // Define constant coordinates
-    const x_begin = 0;
-    const x_end = CELL_SIZE_ * width + 1;
+  ctx.beginPath();
+  ctx.strokeStyle = GRID_COLOR;
 
-    const y_begin = 0;
-    const y_end = CELL_SIZE_ * height + 1;
-    
-    // Draw vertical lines
-    for (let i = 0; i <= width; i++) {
-        const X = i * CELL_SIZE_ + 1;
-        ctx.moveTo(X, y_begin);
-        ctx.lineTo(X, y_end);
-    }
-  
-    // Draw horizontal lines
-    for (let j = 0; j <= height; j++) {
-        const Y = j * CELL_SIZE_ + 1;
-        ctx.moveTo(x_begin, Y);
-        ctx.lineTo(x_end, Y);
-    }
-  
-    ctx.stroke();
+  // Vertical lines.
+  for (let i = 0; i <= width; i++) {
+    ctx.moveTo(i * CELL_SIZE_ + 1, 0);
+    ctx.lineTo(i * CELL_SIZE_ + 1, CELL_SIZE_ * height + 1);
+  }
+
+  // Horizontal lines.
+  for (let j = 0; j <= height; j++) {
+    ctx.moveTo(0,                      j * CELL_SIZE_ + 1);
+    ctx.lineTo(CELL_SIZE_ * width + 1, j * CELL_SIZE_ + 1);
+  }
+
+  ctx.stroke();
 };
 
 const renderLoop = () => {
