@@ -1,4 +1,5 @@
 import { Universe, Cell } from "game-of-life";
+import { memory } from "game-of-life/game_of_life_bg";
 
 const CELL_SIZE = 5; // px
 const CELL_SIZE_ = CELL_SIZE + 1;
