@@ -69,6 +69,21 @@ max of last 100 = ${Math.round(max)}
   }
 };
 
+let animationId = null;
+
+const renderLoop = () => {
+  fps.render();
+
+  drawGrid();
+  drawCells();
+
+  for (let i = 0; i < 9; i++) {
+    universe.tick();
+  }
+
+  animationId = requestAnimationFrame(renderLoop);
+};
+
 // Draw equal-distant overlapping vertical and horizontal lines to create the grid overlay
 const drawGrid = () => {
     ctx.beginPath();
