@@ -1,7 +1,12 @@
+extern crate cfg_if;
+extern crate wasm_bindgen;
+extern crate web_sys;
+
 mod utils;
 
+use std::fmt;
 use wasm_bindgen::prelude::*;
-
+use web_sys::console;
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
 // allocator.
 #[cfg(feature = "wee_alloc")]
