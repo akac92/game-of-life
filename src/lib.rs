@@ -49,71 +49,6 @@ pub struct Universe {
     cells: Vec<Cell>,
 }
 
-/// Public methods, exported to JavaScript.
-#[wasm_bindgen]
-impl Universe {
-
-    pub fn new() -> Universe {
-        let width = 64;
-        let height = 64;
-
-        let cells = (0..width * height)
-            .map(|i| {
-                if i % 2 == 0 || i % 7 == 0 {
-                    Cell::Alive
-                } else {
-                    Cell::Dead
-                }
-            })
-            .collect();
-
-        Universe {
-            width,
-            height,
-            cells,
-        }
-    }
-
-    pub fn render(&self) -> String {
-        self.to_string()
-    }
-
-    pub fn tick(&mut self) {
-        let mut next = self.cells.clone();
-
-        for row in 0..self.height {
-            for col in 0..self.width {
-                let idx = self.get_index(row, col);
-                let cell = self.cells[idx];
-                let live_neighbors = self.live_neighbor_count(row, col);
-
-                let next_cell = match (cell, live_neighbors) {
-                    // Rule 1: Any live cell with fewer than two live neighbors
-                    // dies, as if caused by under-population.
-                    (Cell::Alive, x) if x < 2 => Cell::Dead,
-                    // Rule 2: Any live cell with two or three live neighbors
-                    // lives on to the next generation.
-                    (Cell::Alive, 2) | (Cell::Alive, 3) => Cell::Alive,
-                    // Rule 3: Any live cell with more than three live
-                    // neighbors dies, as if by overpopulation.
-                    (Cell::Alive, x) if x > 3 => Cell::Dead,
-                    // Rule 4: Any dead cell with exactly three live neighbors
-                    // becomes a live cell, as if by reproduction.
-                    (Cell::Dead, 3) => Cell::Alive,
-                    // All other cells remain in the same state.
-                    (otherwise, _) => otherwise,
-                };
-
-                next[idx] = next_cell;
-            }
-        }
-
-        self.cells = next;
-    }
-
-    // ...
-}
-
 /// Private methods, utilize the linear WASM buffer
 impl Universe {
     fn get_index(&self, row: u32, column: u32) -> usize {
@@ -201,8 +136,72 @@ impl Universe {
     }
 }
 
-use std::fmt;
+/// Public methods, exported to JavaScript.
+#[wasm_bindgen]
+impl Universe {
 
+    pub fn new() -> Universe {
+        utils::set_panic_hook();
+        
+        let width = 128;
+        let height = 128;
+
+        let cells = (0..width * height)
+            .map(|i| {
+                if i % 2 == 0 || i % 7 == 0 {
+                    Cell::Alive
+                } else {
+                    Cell::Dead
+                }
+            })
+            .collect();
+
+        Universe {
+            width,
+            height,
+            cells,
+        }
+    }
+
+    pub fn render(&self) -> String {
+        self.to_string()
+    }
+
+    pub fn tick(&mut self) {
+        let mut next = self.cells.clone();
+
+        for row in 0..self.height {
+            for col in 0..self.width {
+                let idx = self.get_index(row, col);
+                let cell = self.cells[idx];
+                let live_neighbors = self.live_neighbor_count(row, col);
+
+                let next_cell = match (cell, live_neighbors) {
+                    // Rule 1: Any live cell with fewer than two live neighbors
+                    // dies, as if caused by under-population.
+                    (Cell::Alive, x) if x < 2 => Cell::Dead,
+                    // Rule 2: Any live cell with two or three live neighbors
+                    // lives on to the next generation.
+                    (Cell::Alive, 2) | (Cell::Alive, 3) => Cell::Alive,
+                    // Rule 3: Any live cell with more than three live
+                    // neighbors dies, as if by overpopulation.
+                    (Cell::Alive, x) if x > 3 => Cell::Dead,
+                    // Rule 4: Any dead cell with exactly three live neighbors
+                    // becomes a live cell, as if by reproduction.
+                    (Cell::Dead, 3) => Cell::Alive,
+                    // All other cells remain in the same state.
+                    (otherwise, _) => otherwise,
+                };
+
+                next[idx] = next_cell;
+            }
+        }
+
+        self.cells = next;
+    }
+}
+
+// Implement fmt::Display trait for our Universe
 impl fmt::Display for Universe {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         for line in self.cells.as_slice().chunks(self.width as usize) {
@@ -212,7 +211,6 @@ impl fmt::Display for Universe {
             }
             write!(f, "\n")?;
         }
-
         Ok(())
     }
 }
