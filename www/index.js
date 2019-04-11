@@ -84,6 +84,31 @@ const renderLoop = () => {
   animationId = requestAnimationFrame(renderLoop);
 };
 
+const playPauseButton = document.getElementById("play-pause");
+
+const isPaused = () => {
+  return animationId === null;
+};
+
+const play = () => {
+  playPauseButton.textContent = "⏸";
+  renderLoop();
+};
+
+const pause = () => {
+  playPauseButton.textContent = "▶";
+  cancelAnimationFrame(animationId);
+  animationId = null;
+};
+
+playPauseButton.addEventListener("click", event => {
+  if (isPaused()) {
+    play();
+  } else {
+    pause();
+  }
+});
+
 // Draw equal-distant overlapping vertical and horizontal lines to create the grid overlay
 const drawGrid = () => {
     ctx.beginPath();
