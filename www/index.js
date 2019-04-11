@@ -129,8 +129,9 @@ const drawGrid = () => {
   ctx.stroke();
 };
 
-const renderLoop = () => {
-    universe.tick();
+const getIndex = (row, column) => {
+  return row * width + column;
+};
 
     drawGrid();
     drawCells();
