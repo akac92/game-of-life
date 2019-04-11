@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lekrow/game-of-life.git"
+    "url": "git+https://github.com/akac92/game-of-life.git"
   },
   "keywords": [
     "webassembly",
@@ -23,14 +23,14 @@
   "author": "Alex Austin <akac92@gmail.com>",
   "license": "(MIT OR Apache-2.0)",
   "bugs": {
-    "url": "https://github.com/lekrow/game-of-life/issues"
+    "url": "https://github.com/akac92/game-of-life/issues"
   },
-  "homepage": "https://github.com/lekrow/game-of-life#readme",
+  "homepage": "https://github.com/akac92/game-of-life#readme",
   "devDependencies": {
+    "copy-webpack-plugin": "^5.0.0",
     "hello-wasm-pack": "^0.1.0",
     "webpack": "^4.29.3",
     "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.5",
-    "copy-webpack-plugin": "^5.0.0"
+    "webpack-dev-server": "^3.3.1"
   }
 }
