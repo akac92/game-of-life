@@ -75,6 +75,7 @@ const renderLoop = () => {
   drawCells();
 
   for (let i = 0; i < 9; i++) {
+    console.log("Ticked")
     universe.tick();
   }
 
@@ -131,8 +132,8 @@ const getIndex = (row, column) => {
 };
 
 const drawCells = () => {
-  const cellsPtr = universe.cells();
-  const cells = new Uint8Array(memory.buffer, cellsPtr, width * height);
+  const cells_ptr = universe.cells();
+  const cells = new Uint8Array(memory.buffer, cells_ptr, width * height);
 
   ctx.beginPath();
 
