@@ -8,6 +8,13 @@ use std::fmt;
 use wasm_bindgen::prelude::*;
 use web_sys::console;
 
+// A macro to provide `println!(..)`-style syntax for `console.log` logging.
+macro_rules! log {
+    ( $( $t:tt )* ) => {
+        web_sys::console::log_1(&format!( $( $t )* ).into());
+    }
+}
+
 pub struct Timer<'a> {
     name: &'a str,
 }
@@ -130,7 +137,6 @@ impl Universe {
 
     pub fn new() -> Universe {
         utils::set_panic_hook();
-
         let width = 64;
         let height = 64;
 
