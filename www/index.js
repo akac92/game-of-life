@@ -69,6 +69,8 @@ max of last 100 = ${Math.round(max)}
 let animationId = null;
 
 const renderLoop = () => {
+  // Uncomment to set debugger start in browser
+  // debugger;
   fps.render();
 
   drawGrid();
